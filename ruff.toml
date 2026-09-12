@@ -1,0 +1,608 @@
+# Exclude a variety of commonly ignored directories.
+exclude = [ #
+	".bzr",
+	".direnv",
+	".eggs",
+	".git",
+	".git-rewrite",
+	".hg",
+	".ipynb_checkpoints",
+	".mypy_cache",
+	".nox",
+	".pants.d",
+	".pyenv",
+	".pytest_cache",
+	".pytype",
+	".ruff_cache",
+	".svn",
+	".tox",
+	".venv",
+	"venv",
+	".vscode",
+	"__pypackages__",
+	"_build",
+	"buck-out",
+	"build",
+	"dist",
+	"node_modules",
+	"site-packages",
+]
+
+line-length  = 150
+indent-width = 4
+
+target-version = "py311"
+preview        = true
+
+[format]
+quote-style  = "double"
+indent-style = "tab"
+
+nested-string-quote-style = "preferred"
+
+skip-magic-trailing-comma = false
+
+line-ending = "auto"
+
+docstring-code-format      = true
+docstring-code-line-length = "dynamic"
+
+[lint]
+# Allow select greek letters
+allowed-confusables = ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "κ", "λ", "μ", "ξ", "π", "σ", "ς", "τ", "φ", "ψ", "ω", "Γ", "Δ", "Π", "Σ", "Ω"]
+
+pydocstyle.convention = "google"
+# (using: )
+#
+# Args:
+#    whatever
+#
+# (instead of: )
+#
+# Args
+# ----
+# whatever
+
+flake8-annotations.suppress-dummy-args     = true
+flake8-annotations.suppress-none-returning = true
+
+select = [
+	# commented-out code
+	#"ERA001",
+
+	# FastAPI
+	"FAST",
+
+	# flake8-2020
+	"YTT101",
+	"YTT102",
+	"YTT103",
+
+	"YTT201",
+	"YTT202",
+	"YTT203",
+	"YTT204",
+
+	"YTT301", # "python 10.0" :sob:
+	"YTT302",
+	"YTT303",
+
+	# flake8-annotations
+	"ANN001",
+	"ANN002",
+	"ANN003",
+	"ANN201",
+	"ANN202",
+	#"ANN204", # obvious methods shouldn't be annotated (think: __init__ -> None, __repr__ -> str)
+	"ANN205",
+	"ANN206",
+
+	# flake8-async
+	"ASYNC",
+
+	# flake8-bandit
+	"S113", # request without a timeout
+
+	# flake8 boolean fly trap
+	"FBT001", # def f(b: bool): ... (should be (*, b: ...) )
+	"FBT002", # def f(b=False): ... (should be (*, b=...) )
+	# Specifically not opting in for the caller side (FBT003), only definition side. This could prevent integration with badly written libraries...
+
+	# flake8-bugbear
+	"B002",
+	"B003",
+	"B004",
+	"B005",
+	"B007",
+	"B009",
+	"B010",
+	"B011",
+	"B012",
+	"B013",
+	"B014",
+	"B015",
+	"B016",
+	"B018",
+	"B019",
+	"B020",
+	"B021",
+	"B022",
+	"B023",
+	"B024",
+	"B025",
+	"B026",
+	"B027",
+	"B028",
+	"B029",
+	"B030",
+	"B031",
+	"B033",
+	"B034",
+	"B035",
+	"B039",
+	"B043",
+	"B901",
+	"B903",
+	"B904",
+	"B905",
+	"B909",
+	"B911",
+	"B912",
+
+	# flake8-builtins
+	"A001",
+	"A002",
+	"A003",
+	"A004",
+	"A005",
+	# explicitly opting out of A006, since lambda argument shadowing seems a bit too strict..
+
+	# flake8-commas
+	#"COM812", trailing comma - should be handled by the magic comma ruff formatter or whatever
+	"COM818",
+	"COM819",
+
+	# flake8-comprehensions
+	"C400",
+	"C401",
+	"C402",
+	"C403",
+	"C404",
+	"C405",
+	"C406",
+	# specifically opting out of C408, since doing dict(x=1, y=2) is a common pattern that i like to use sometimes
+	"C409",
+	"C410",
+	"C411",
+	"C413",
+	"C414",
+	"C415",
+	"C416",
+	"C417",
+	"C418", # owo
+	"C419",
+	"C420",
+
+	# flake8-datetimez
+	"DTZ001",
+	"DTZ002",
+	"DTZ003",
+	"DTZ004",
+	"DTZ005",
+	"DTZ006",
+	"DTZ007",
+	"DTZ011",
+	"DTZ012",
+	"DTZ901",
+
+	# flake8-debugger
+	"T100",
+
+	# flake8-django
+	"DJ", # selecting entire category, since i dont know much about django and any help would be nice!
+
+	# flake8-errmsg
+	"EM101", # Note for self: instead of removing those rules try to actually follow the `msg = ...; raise E(msg)` pattern.
+	"EM102",
+	"EM103",
+
+	# flake8-executable
+	"EXE001",
+	"EXE002",
+	"EXE003",
+	"EXE004",
+	"EXE005",
+
+	# flake8-fixme
+	"FIX001", # 'FIXME'
+	"FIX002", # 'TODO'
+	"FIX004", # 'HACK'
+
+	# flake8-gettext
+	"INT001",
+	"INT002",
+	"INT003",
+
+	# flake8-implicit-str-concat
+	"ISC001",
+	"ISC002",
+	"ISC003",
+	"ISC004",
+
+	# flake8-import-conventions
+	"ICN001",
+	"ICN002",
+	"ICN003",
+
+	# flake8-logging & flake8-logging-format
+	"LOG", # Just get all the logging rules, though i'm not so sure about using the default camelCase logging module...
+	"G",
+
+	# flake8-no-pep420 (forbid namespace packages)
+	"INP001",
+
+	# flake8-pie
+	"PIE790",
+	"PIE794",
+	"PIE796",
+	"PIE800",
+	"PIE804",
+	"PIE807",
+	"PIE808",
+	"PIE810",
+
+	# flake8-pyi
+	"PYI", # we'll see if this holds, because if i open up somebody else's .pyi and ruff starts yelling at me, i'm tossing this shit the hell out
+
+	# flake8-pytest-style
+	"PT",
+
+	# flake8-return
+	"RET",
+
+	# flake8-simplify
+	"SIM",
+
+	# flake8-slots
+	"SLOT",
+
+	# flake8-type-checking
+	"TC",
+
+	# flake8-unused-arguments
+	"ARG005", # opt in only for lambdas
+
+	# flake8-use-pathlib
+	"PTH",
+
+	# flynt
+	"FLY002",
+
+	# isort
+	"I001",
+
+	# numpy
+	"NPY",
+
+	# pandas
+	"PD",
+
+	# pep8-naming
+	"N804", # method first argument should be `self`
+	"N805", # classmethod first argument should be `cls`
+	"N811", # constant imported as non-constant-looking name
+	"N818", # 'Error' suffix on exception typedefs
+
+	# perflint
+	"PERF101",
+	"PERF102",
+
+	"PERF401",
+	"PERF402",
+	"PERF403",
+
+	# pycodestyle (error)
+	"E101", # mixed spaces and tabs
+	"E711", # none comparison using `==`, should be using `is`
+	"E712", # comparison `== True` or `== False`
+	"E713", # 'not x in y' -> 'x not in y'
+	"E714", # 'not x is y' -> 'x is not y'
+	"E722", # bare 'except:'
+	"E731", # do not assign a lambda expression, use a def
+	"E902", # IOError (ruff itself cannot read a file)
+
+	# pycodestyle (warning)
+	"W605", # invalid escape sequence
+
+	# pydoclint
+	"DOC",
+
+	# pydocstyle
+	# "D1", # 'thing X should be documented'
+	# "D417", # 'function/method param X should be documented within the already documented function.'
+
+	"D200", # docstring could be on a single line
+	"D201", # 'unwanted blank between def and """', specifically opting out of 'blank between def's """ and later code', since this blurs the text together.
+	"D207", # docstring under-indented
+	"D208", # docstring over-indented
+	"D204", # 'missing blank between class's """ and class body'
+	"D209", # multiline docstring should have their ending quotes on a new line
+	"D210", # unwanted whitespace around docstring text. """ This. """ should be """This."""
+	"D211", # 'unwanted blank between class and """'
+	"D212", # multiline docstring's first line should be on the same line as """
+	"D214", # docstring section over-indented
+	"D300", # docstring str should be using " quotes (as opposed to ' quotes)
+	"D301", # use r""" if any backslashes in docstring
+	"D400", # docstring should end in a period
+	"D403", # docstring first word should be capitalized
+	"D405", # docstring section name not properly capitalized (args -> Args)
+	"D412", # unwanted newline between docstring section and the section's content
+	"D416", # missing section names' ":", (Args -> Args:)
+	"D418", # overloads should not be documented separately
+	"D419", # docstring content missing entirely. ("""""")
+	"D420", # docstring sections in correct order
+
+	# pyflakes
+	"F401", # unused import
+	"F50", # various helpful %-format rules
+	"F52", # various helpful str.format() rules
+	"F541", # f-string without any placeholders
+	"F60", # in dictionary literal: key repeated
+	"F622", # `a, *b, c, *d, e = f` is invalid syntax (notice the two '*'s)
+	"F631", # `assert (...,)` where tuple has at least one element is always true
+	"F634", # same as above but for `if (...,)`
+	"F632", # use == when comparing to literals that arent None, True, False, etc.
+	"F707", # order of exception handlers in try-except is wrong (most general handler should be last)
+	"F811", # redefinition of unused name from line X
+	"F822", # undefined name in __all__
+	"F842", # unused annotation (`foo: int`)
+	"F901", # raise NotImplemented should be raise NotImplementedError
+
+	# pygrep-hooks
+	# "PGH003", # blanket `type: ignore` (a specific `type: ignore[whatever]` should be provided)
+	# "PGH004", # blanket `# noqa` (a specific `noqa: whatever` should be provided)
+	"PGH005", # blanket mock attribute access, where it should be a function call (e.g. `mock.assert_called` should be `mock.assert_called()`)
+
+	# pylint
+	"PLC0105", # typevar variance should be reflected in the name (T_co, U_contra)
+	"PLC0131", # typevar cannot be covariant and contravariant at the same time
+	"PLC0132", # typevar's bound name should be the same as declared name (`T = TypeVar("T")`, not `T = TypeVar("U")`)
+	"PLC0205", # __slots__ should be a tuple, not `__slots__ = "asdf"` (instead: `__slots__ = ("asdf",)`)
+	"PLC0206", # iteration over dict where it could be `.items()`
+	"PLC0207", # in str.split()[int], a maxsplit should be used, since it gets getitemed anyway
+	"PLC0208", # iteration over set literal, where tuple literal is faster to iterate over.
+	"PLC1802", # do not use `if len(x):`, use `if x:` instead
+	#"PLC1901", # a variable of type `str` should not be `== ""`, use `not x` instead
+
+	"PLE010", # do not use `yield` or `return` in `__init__`
+	"PLE0115", # use of `nonlocal` and `global` at the same time on the same identifier
+	"PLE0116", # `continue` in `finally`
+	"PLE0117", # `nonlocal` used, but the nonlocal scope doesnt define that variable
+	"PLE0118", # `global` keyword should be used at the top of the scope
+	"PLE0237", # assignment outside of defined `__slots__`
+	"PLE0241", # duplicate base in class definition
+	"PLE030", # unexpected signature or return types of a magic methods (e.g. `def __len__(self, wtf): ...`)
+	"PLE060", # __all__ invalid
+	"PLE0643", # literal expression likely to raise IndexError (e.g. `[1, 2, 3][3]`)
+	"PLE0704", # misplaced bare `raise`
+	"PLE1141", # unpacking dict to pairs without calling .items()
+	"PLE12", # logging: too many or too few args
+	"PLE13", # invalid string formatting (e.g. '%z' % 'a' - invalid format specifier 'z'), and others
+	"PLE1519", # on methods use `@singledispatchmethod` instead of `@singledispatch`
+	"PLE1520", # same as above but in reverse for non-methods
+	"PLE2502", # check for unicode RTL in source code (could slip backdoors in, if not careful, since would look like a comment)
+	"PLE251", # actual control characters in source code, use escaped versions
+	"PLE4703", # set modified during iteration will cause a RuntimeError
+
+	"PLR0124", # x==x, convert to True or math.isnan(x)
+	"PLR0133", # 1==1, convert to True
+	"PLR0202", # manual classmethod decorator
+	"PLR0203", # manual staticmethod decorator
+	"PLR0206", # @property cannot have parameters
+	"PLR0402", # use from imports when needed
+	"PLR1708", # don't raise `StopIteration` in a generator, use `return` instead
+	"PLR1712", # unnecessary tmp variable in swap, use `a, b = b, a`
+	"PLR1714", # repeated == operator on same object, use the `in` operator
+	"PLR1716", # use the chained comparison (`a < b < c`) instead of `a < b and b < c`
+	"PLR5501", # replace else: if with elif
+	"PLR6104", # prefer += operator over x=x+1, and so on for other supported inplace operators
+	"PLR6201", # prefer sets for membership testing of literals
+	#"PLR6301", # refactor methods that don't use the `self` argument into functions or staticmethods
+
+	"PLW0108", # `lambda: str()` -> `str`
+	"PLW0120", # useless else on a loop
+	"PLW0127", # avoid useless x=x
+	"PLW0128", # avoid mentioning same itentifier in assignment unpacking left side, because it overrides
+	"PLW0129", # `assert "str"` is always true for nonempty strs
+	"PLW0131", # walrus operator unneeded
+	"PLW0177", # == float('nan')
+	"PLW0244", # __slots__ should only mention additional slots in subclass
+	"PLW0245", # super needs parenthesis to work
+	"PLW0406", # module imports itself, which causes a circular import error
+	"PLW0602", # global used, but this var only read, not written to
+	"PLW0604", # global at module scope is redundant
+	"PLW0711", # `except A or B` should be `except (A, B)` in 99.9% of cases (is a brainfart and not intentional)
+	"PLW1501", # bad `mode` string for open()
+	"PLW1507", # correct way to copy os.environ
+	"PLW1508", # .get() for env should have a valid default type (env vars always store strings)
+	"PLW1509", # subproces.Popen has built-in methods to not have to use a preexec_fn
+	"PLW1510", # subprocess.run should be used with `check=...` like `zip` with `strict=...` to avoid silent failures unless explicitly requested
+	"PLW1514", # always specify encoding
+	"PLW2101", # threading.Lock should share the same instance across threads, otherwise it's useless
+	#"PLW2901", # `for i in x: for i in y:` doesnt let you access the first loop's i, this also applies to multiple with statements; NOTE: disabled becase it also broke shit like for expr in exprs: expr = expr.strip(); even though this just a simple mapping... and not overwriting with like expr = "shit"...
+	"PLW3301", # min(x, min(y, z)) -> min(x, y, z), though this is unsafe if any x, y or z are float('nan')
+
+	# pyupgrade
+	"UP",
+
+	# refurb
+	"FURB101", # open().read() -> use pathlib
+	"FURB103", # open().write() -> use pathlib
+	"FURB105", # print("") -> print()  ; though might be annoying if a warning pops up every fucking time i use print so we'll see if this sticks
+	"FURB110", # `x if x else y` -> `x or y`
+	"FURB113", # repeated append() -> extend()
+	"FURB116", # bin(1337)[:2] -> f'{1337:b}'
+	"FURB122", # try to use writelines() instead of write() in a loop if possible
+	"FURB129", # iteration over a `f` already invokes .readlines() by default, no need to call it explicitly
+	"FURB131", # prefer `x.clear()` over `del x[:]` for lists and dicts
+	"FURB132", # prefer `set.discard` over `set.remove`, when you know about the element's whereabouts anyway
+	"FURB136", # don't do manual min or max via if expr
+	"FURB142", # don't use set.add or set.discard in a loop, set.update or set.difference_update, or -=, |= operators tho the operators require set type on rhs as well
+	"FURB145", # prefer `x = lst.copy()` over `x = lst[:]`
+	"FURB148", # unnecessary enumerate
+	"FURB152", # detect hardcoded versions of math constants, prefer math.pi, math.e, etc.
+	"FURB156", # simillar to above but for string module constants
+	"FURB154", # `global` supports multiple identifierrs joined by a comma
+	"FURB157", # `Decimal` should be used without unnecessary proxies like float() or string when not needed
+	"FURB161", # manual int.bit_count()
+	"FURB162", # datetime.fromisoformat handling of timezone "Z"
+	"FURB163", # redundant math.log() base, use log2, log10, etc.
+	"FURB166", # use int(..., base=0) to detect the "0x", "0b", "0o" prefixes automatically instead of slicing, etc.
+	"FURB168", # use `x is None` instead of `isinstance(x, type(None))`
+	"FURB169", # use `x is None` instead of `type(obj) == type(None)`
+	"FURB177", # use pathlib.Path.cwd() instead of pathlib.Path().resolve()
+	"FURB180", # use abc.ABC instead of abc.ABCMeta
+	"FURB188", # startswith+slice -> removeprefix(), same for ends/suffix
+	"FURB189", # use User* types when wanting to inherit from a builtin type, since the builtins don't consistently use their own dunder methods
+	"FURB192", # manual min/max with sorted()[0]
+
+	# ruff
+	"RUF001", # confusable unicode characters
+	"RUF002", # confusable unicode characters in docstrings
+	"RUF003", # confusable unicode characters in comments
+	"RUF005", # concatenate collections using *splat
+	"RUF006", # asyncio event loop stores tasks in a weakref, you have to store it somewhere
+	"RUF007", # manual itertools.pairwise() with zip() and slicing
+	"RUF008", # mutable defaults in @dataclass'es and simillar
+	"RUF009", # same as above but the mutable default is coming from a function
+	"RUF010", # use f-strings' {!r} instead of manual repr() calls
+	"RUF012", # mutable classvar default
+	"RUF013", # x: int = None -> x: int | None = None
+	"RUF015", # prefer next(x) over list(x)[0]
+	"RUF016", # invalid index type, like indexing into a list with a str
+	"RUF017", # use better list flattening strategy
+	"RUF018", # dont use the wlarus operator in assert
+	"RUF019", # instead of `x in dct and dct[x]`, use `dct.get(x)`
+	"RUF020", # union with Never is same as the other side of the union by itself
+	"RUF021", # in expr `x or y and z` parenthesise the `y and z` part since `and` binds tigher than `or`.
+	"RUF022", # unsorted __all__
+	"RUF023", # unsorted __slots__
+	"RUF028", # ineffective `# fmt: off` and simillar comments
+	"RUF030", # assert with second argument being call to print should not be used
+	"RUF032", # decimal called from float literal
+	"RUF033", # use dataclasses.InitVar instead of init parameters' default value which dont work like that
+	"RUF034", # `x if y else x` -> `x`
+	"RUF036", # `None` should be at the end of a type union
+	"RUF037", # deque should not take empty iterable as first argument, as that's the default
+	"RUF038", # `Literal[True, False]` -> `bool`
+	"RUF039", # use r-str for regex calls
+	"RUF040", # assert second argument must a str
+	"RUF041", # unnecessary nested `Literal`
+	"RUF043", # pytest.raises(match=) shenanings
+	"RUF045", # implicit classvar in dataclass
+	"RUF046", # unnecessary cast to int
+	"RUF047", # empty `else` clause
+	"RUF048", # don't int-parse parts of  version.split('.'), because it might not contain text like "post-1" which is not a valid integer
+	"RUF049", # don't use @dataclass on an enum.Enum class
+	"RUF050", # empty `if` clause
+	"RUF051", # `if key in dict: del dict[key]` -> `dict.pop(key, None)`
+	"RUF053", # type vars cause problems with Generic
+	"RUF054", # formfeed characters shouldn't be used
+	"RUF055", # regex could be replaced with simpler function
+	"RUF056", # falsey dict.get() fallback (the default of "None" is already falsey)
+	"RUF057", # unnecessary round (value is already an integer)
+	"RUF058", # starmap(f, zip(*...)) should be replaced with normal map
+	"RUF059", # unused unpacked variable
+	"RUF060", # `x in ()` or any empty collection
+	"RUF061", # legacy form pytest.raises
+	"RUF063", # correctly get annotations
+	"RUF064", # non-octal chmod permissions
+	"RUF065", # dont eagerly convert to str in logging
+	"RUF066", # @property without return
+	"RUF067", # __init__.py should only feature imports, docs and __all__
+	"RUF068", # duplicate entry in __all__
+	"RUF069", # float math should not use == or !=, but rather math.isclose
+	"RUF070", # unnecessary assign before yield
+	"RUF071", # os.path.commonprefix compares by char, os.path.commonpath compares by path part
+	"RUF072", # useless `finally` clause
+	"RUF074", # incorrect decorator order
+	"RUF075", # fallible @contextmanager
+	"RUF100", # unused noqa
+	"RUF101", # redirected noqa, use redirect target
+	"RUF102", # invalid noqa
+	"RUF103", # invalid suppression comment
+	"RUF104", # unmatched ruff: disable (add ruff: enable)
+	"RUF200", # pyproject.toml schema
+
+	# try
+	"TRY002", # create your own exception class
+	"TRY003", # exception messages should ideally be within the class __init__, not at class init site
+	"TRY004", # use TypeError for failed isinstance(x, T)
+	"TRY201", # use no-argument `raise` if possible
+	"TRY203", # useless try-except
+	"TRY300", # consider moving to else block
+	"TRY301", # raise within try shouldn't be used if possible
+	"TRY400", # logging.error->logging.exception when in except handler
+	"TRY401", # do not attach exception instance to logging.exception as it already has it
+]
+
+ignore = [
+	"D105", # document magic methods, like __str__, this is just stupid. Why add a "Return a string representation of X"??? this is entirely obvious...
+	"D107", # document every public __init__. This is too much.
+	"TC003", # not moving to type checking block if im going to use it a second
+]
+
+# ignore = [
+# 	# "COM812",  # missing-trailing-comma                           | So ruff fmt shuts up
+# 	# "COM812",  # single-line-implicit-string-concatenation        | So ruff fmt shuts up
+
+# 	"ANN401", # any-type                                         |   Dynamically typed expressions (typing.Any) are disallowed
+# 	"DTZ001", # call-datetime-without-tzinfo                     |   The use of datetime.datetime() without tzinfo argument is not allowed
+# 	"DTZ005", # call-datetime-now-without-tzinfo                 |   The use of datetime.datetime.now() without tzinfo argument is not allowed
+# 	"RUF012", # mutable-class-default                            |   Class utils no longer work so it's on the ignore list
+# 	"ARG001", # unused-function-argument                         |   Messed with voiding arguments so it's disabled
+# 	"ARG002", # unused-method-argument                           |   Messed with voiding arguments so it's disabled
+# 	"ARG003", # unused-class-method-argument                     |   Messed with voiding arguments so it's disabled
+# 	"ARG005", # unused-lambd-argument                            |   Messed with voiding arguments so it's disabled
+# 	"ARG004", # unused-static-method-argument                    |   Messed with voiding arguments so it's disabled
+# 	# "PLR2004", # magic-value-comparison                         |   Magic values bruh shut up
+# 	"PLR0913", # too-many-arguments                               |   Too many function arguments
+# 	"RET505", # superfluous-else-return                          |   This rule just messes up readability, bruh
+# 	"TRY003", # raise-vanilla-args                               |   Exception("asdf") -> msg = 'asdf'; Exception(msg) bruuuuuhhhhh
+# 	"PTH109", # os-getcwd                                        |   os.getcwd() is fine
+# 	"PYI041", # redundant-numeric-union                          |   No
+# 	"PIE796", # non-unique-enums                                 |   But then enums are dumb?
+# 	"PIE790", # unnecessary-pass                                 |   Shut up
+# 	"PIE800", # unnecessary-spread                               |   no u
+# 	"B008", # function-call-in-default-argument                |   This has its uses
+# 	"B006", # Do not use mutable data structures for argument defaults # No, fuck off
+# 	"RUF005", # collection-literal-concatenation                 |   Shut up x2
+# 	"A001", # builtin-variable-shadowing                       |   id
+# 	"A002", # builtin-argument-shadowing                       |   type
+# 	"A003", # builtin-attribute-shadowing                      |   type
+# 	"A005", # Module tcrutils/types.py is shadowing python's builtin...
+# 	"TRY301", # raise-within-try                                 |   no i will not
+# 	"RET503", # implicit-return                                  |   like wtf?
+# 	"PIE804", # unnecessary-dict-kwargs                          |   sometimes useful
+# 	"RUF013", # implicit-optional                                |   that's dumb
+# 	"SIM105", # suppressible-exception                           |   obnoxious
+# 	"SIM108", # if-else-block-instead-of-if-exp                  |   makes stuff less readable
+# 	"UP032", # f-string                                         |   sometimes .format() is useful
+# 	"UP031", # Use format specifiers instead of percent format  |   sometimes % is useful
+# 	"SIM117", # multiple-with-statements                         |   more readable the old way
+# 	"SIM102", # collapsible-if                                   |   nah
+# 	# "TCH001",  # typing-only-first-party-import                   |   move to type checking my ass
+# 	# "TCH002",
+# 	# "TCH003",
+
+# 	"A004", # Overriding built-ins, from rich import print
+# 	"RUF029", # async fn without awaits
+# 	"I001", # I have a better import sorter
+# 	"B026", # Star-arg unpacking after a keyword argument is strongly discouraged
+# 	"FURB142", # Use of `set.add()` in a for loop
+# ]
+
+[lint.extend-per-file-ignores]
+# don't require annotations for tests
+"tests/**/*.py" = ["ANN"]
+"test*.py"      = ["ANN"]
