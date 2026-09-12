@@ -1,0 +1,3 @@
+[submodule "pypi-uv-publish.sh"]
+	path = pypi-uv-publish.sh
+	url = https://github.com/anamoyee/pypi-uv-publish.sh
