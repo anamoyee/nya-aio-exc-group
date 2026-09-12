@@ -1,0 +1,18 @@
+[project]
+name = 'nya-aio-exc-group'
+dynamic = ['version']
+description = 'asyncio aggregation function(s) with support for conversion of raised exceptions into an exception group'
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+# [project.scripts]
+# nya_aio_exc_group = "nya_aio_exc_group.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/nya_aio_exc_group/_version.py"
+pattern = '__version__(?:: str)? *= *\"(?P<version>[^\"]+)\"'
